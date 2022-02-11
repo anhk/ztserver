@@ -21,6 +21,9 @@ func (ipt *IptablesFirewall) Init(infName string) error {
 	// init
 	_ = RunCmd("ipset", "create", IpsetName, "hash:ip", "timeout", "30")
 	_ = RunCmd("iptables", "-I", "INPUT", "1", "-m", "set", "--match-set", IpsetName, "src", "-i", infName, "-j", "ACCEPT")
+
+	// drop all
+	_ = RunCmd("iptables", "-P", "INPUT", "DROP")
 	return nil
 }
 
