@@ -15,12 +15,12 @@ var (
 
 func (ipt *IptablesFirewall) Init(infName string) error {
 	// clear
-	_ = RunCmd("iptables", "-D", "INPUT", "-m", "set", "--match-set", IpsetName, "-i", infName, "-j", "ACCEPT")
+	_ = RunCmd("iptables", "-D", "INPUT", "1", "-m", "set", "--match-set", IpsetName, "src", "-i", infName, "-j", "ACCEPT")
 	_ = RunCmd("ipset", "destroy", IpsetName)
 
 	// init
-	_ = RunCmd("ipset", "create", IpsetName, "timeout", "30")
-	_ = RunCmd("iptables", "-I", "INPUT", "1", "-m", "set", "--match-set", IpsetName, "-j", "ACCEPT")
+	_ = RunCmd("ipset", "create", IpsetName, "hash:ip", "timeout", "30")
+	_ = RunCmd("iptables", "-I", "INPUT", "1", "-m", "set", "--match-set", IpsetName, "src", "-i", infName, "-j", "ACCEPT")
 	return nil
 }
 
