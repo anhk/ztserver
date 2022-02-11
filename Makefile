@@ -14,5 +14,5 @@ clean:
 -include .deps
 dep:
 	echo -n "$(OBJ):" > .deps
-	find src -name '*.go' | awk '{print $$0 " \\"}' >> .deps
+	find . -name '*.go' | awk '{print $$0 " \\"}' >> .deps
 	echo "" >> .deps
