@@ -15,7 +15,7 @@ var (
 
 func (ipt *IptablesFirewall) Init(infName string) error {
 	// clear
-	_ = RunCmd("iptables", "-D", "INPUT", "1", "-m", "set", "--match-set", IpsetName, "src", "-i", infName, "-j", "ACCEPT")
+	_ = RunCmd("iptables", "-D", "INPUT", "-m", "set", "--match-set", IpsetName, "src", "-i", infName, "-j", "ACCEPT")
 	_ = RunCmd("ipset", "destroy", IpsetName)
 
 	// init
